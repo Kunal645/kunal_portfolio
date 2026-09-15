@@ -2,8 +2,6 @@
 
 set -e
 
-export FLUTTER_ALLOW_ROOT=1
-
 echo "Installing Flutter 3.29.0..."
 
 git clone --depth 1 https://github.com/flutter/flutter.git /tmp/flutter
@@ -14,6 +12,10 @@ git fetch --depth 1 origin 35c388afb57ef061d06a39b537336c87e0e3d1b1
 
 git checkout 35c388afb57ef061d06a39b537336c87e0e3d1b1
 
+echo "Patching Flutter root check..."
+
+sed -i '/Woah! You appear to be trying to run flutter as root./,+4d' /tmp/flutter/bin/flutter
+
 echo "Flutter version:"
 
 /tmp/flutter/bin/flutter --version
@@ -22,9 +24,9 @@ echo "Flutter version:"
 
 cd "$VERCEL_PROJECT_DIR"
 
-echo "Getting dependencies..."
-
 export PUB_CACHE=/tmp/pub-cache
+
+echo "Getting dependencies..."
 
 /tmp/flutter/bin/flutter pub get
 
