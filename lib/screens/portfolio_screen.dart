@@ -237,7 +237,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   ),
                 ),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 30)),
+                const SliverToBoxAdapter(child: SizedBox(height: 0)),
               ],
             ),
           ),

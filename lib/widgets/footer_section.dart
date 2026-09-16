@@ -58,16 +58,22 @@ class _FooterSectionState extends State<FooterSection> {
                 child: Column(
                   children: [
                     SizedBox(height: 30,),
-                    ScrollReveal(
-                      offset: const Offset(0, 0.05),
-                      child: _buildTopSection(isMobile),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ScrollReveal(
+                          delay: const Duration(milliseconds: 120),
+                          offset: const Offset(0, 0.05),
+                          child: _buildGiantName(isMobile),
+                        ),
+                        ScrollReveal(
+                          offset: const Offset(0, 0.05),
+                          child: _buildTopSection(isMobile),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 75),
-                    ScrollReveal(
-                      delay: const Duration(milliseconds: 120),
-                      offset: const Offset(0, 0.05),
-                      child: _buildGiantName(isMobile),
-                    ),
+                    // const SizedBox(height: 75),
+
                     const SizedBox(height: 60),
                     _buildDivider(),
                     const SizedBox(height: 25),
@@ -121,7 +127,7 @@ class _FooterSectionState extends State<FooterSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'KUNAL',
+          'KUNAL VAGHELA',
           style: GoogleFonts.inter(
             fontSize: 28,
             fontWeight: FontWeight.w700,
@@ -131,7 +137,7 @@ class _FooterSectionState extends State<FooterSection> {
         ),
         const SizedBox(height: 8),
         Text(
-          'SOFTWARE ENGINEER',
+          'SENIOR SOFTWARE ENGINEER',
           style: GoogleFonts.inter(
             fontSize: 9,
             fontWeight: FontWeight.w600,
