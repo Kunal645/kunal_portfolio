@@ -13,6 +13,8 @@ class Navbar extends StatelessWidget {
   final VoidCallback onExperienceTap;
   final VoidCallback onContactTap;
 
+  final String activeSection;
+
   const Navbar({
     super.key,
     required this.onLogoTap,
@@ -21,6 +23,7 @@ class Navbar extends StatelessWidget {
     required this.onProjectsTap,
     required this.onExperienceTap,
     required this.onContactTap,
+    required this.activeSection,
   });
 
   @override
@@ -46,20 +49,20 @@ class Navbar extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      AppTheme.surface.withOpacity(0.78),
-                      AppTheme.surfaceLight.withOpacity(0.62),
+                      AppTheme.surface.withOpacity(0.92),
+                      AppTheme.surfaceLight.withOpacity(0.78),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withOpacity(0.085)),
+                  border: Border.all(color: Colors.white.withOpacity(0.12)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.22),
-                      blurRadius: 30,
-                      offset: const Offset(0, 12),
+                      color: Colors.black.withOpacity(0.34),
+                      blurRadius: 35,
+                      offset: const Offset(0, 14),
                     ),
                     BoxShadow(
-                      color: AppTheme.accent.withOpacity(0.025),
+                      color: AppTheme.accent.withOpacity(0.045),
                       blurRadius: 35,
                       spreadRadius: 2,
                     ),
@@ -68,13 +71,12 @@ class Navbar extends StatelessWidget {
                 child: Row(
                   children: [
                     _Logo(onTap: onLogoTap),
-
                     const Spacer(),
-
                     if (!isMobile)
                       _buildDesktopNavigation()
                     else
                       _MobileMenuButton(
+                        activeSection: activeSection,
                         onAboutTap: onAboutTap,
                         onSkillsTap: onSkillsTap,
                         onProjectsTap: onProjectsTap,
@@ -95,11 +97,32 @@ class Navbar extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _NavItem(title: 'About', onTap: onAboutTap),
-        _NavItem(title: 'Skills', onTap: onSkillsTap),
-        _NavItem(title: 'Projects', onTap: onProjectsTap),
-        _NavItem(title: 'Experience', onTap: onExperienceTap),
-        _NavItem(title: 'Contact', onTap: onContactTap, isAccent: true),
+        _NavItem(
+          title: 'About',
+          onTap: onAboutTap,
+          isActive: activeSection == 'about',
+        ),
+        _NavItem(
+          title: 'Skills',
+          onTap: onSkillsTap,
+          isActive: activeSection == 'skills',
+        ),
+        _NavItem(
+          title: 'Projects',
+          onTap: onProjectsTap,
+          isActive: activeSection == 'projects',
+        ),
+        _NavItem(
+          title: 'Experience',
+          onTap: onExperienceTap,
+          isActive: activeSection == 'experience',
+        ),
+        _NavItem(
+          title: 'Contact',
+          onTap: onContactTap,
+          isActive: activeSection == 'contact',
+          isAccent: true,
+        ),
       ],
     );
   }
@@ -188,11 +211,13 @@ class _NavItem extends StatefulWidget {
   final String title;
   final VoidCallback onTap;
   final bool isAccent;
+  final bool isActive;
 
   const _NavItem({
     required this.title,
     required this.onTap,
     this.isAccent = false,
+    this.isActive = false,
   });
 
   @override
@@ -204,6 +229,8 @@ class _NavItemState extends State<_NavItem> {
 
   @override
   Widget build(BuildContext context) {
+    final bool highlighted = widget.isActive || isHovered;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) {
@@ -219,53 +246,67 @@ class _NavItemState extends State<_NavItem> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
           margin: const EdgeInsets.only(left: 7),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
           decoration: BoxDecoration(
             color:
-                isHovered
-                    ? (widget.isAccent
-                        ? AppTheme.accent.withOpacity(0.11)
-                        : Colors.white.withOpacity(0.035))
-                    : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color:
-                  isHovered
-                      ? (widget.isAccent
-                          ? AppTheme.accent.withOpacity(0.16)
-                          : Colors.white.withOpacity(0.045))
-                      : Colors.transparent,
-            ),
+                 Colors.transparent,
+            // borderRadius: BorderRadius.circular(10),
+            // border: Border.all(
+            //   color:
+            //       highlighted
+            //           ? (widget.isAccent
+            //               ? AppTheme.accent.withOpacity(
+            //                 widget.isActive ? 0.22 : 0.16,
+            //               )
+            //               : Colors.white.withOpacity(
+            //                 widget.isActive ? 0.075 : 0.045,
+            //               ))
+            //           : Colors.transparent,
+            // ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 220),
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
                 style: GoogleFonts.inter(
                   fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                  fontWeight:
+                      widget.isActive ? FontWeight.w500 : FontWeight.w500,
                   letterSpacing: 0.2,
                   color:
-                      isHovered
-                          ? (widget.isAccent
-                              ? AppTheme.accentLight
-                              : AppTheme.primaryText)
+                      highlighted
+                          ?  AppTheme.primaryText
                           : AppTheme.secondaryText.withOpacity(0.72),
                 ),
                 child: Text(widget.title),
               ),
+
               const SizedBox(height: 4),
+
               AnimatedContainer(
-                duration: const Duration(milliseconds: 220),
-                width: isHovered ? 16 : 0,
-                height: 1,
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                width: highlighted ? 18 : 0,
+                height: 1.5,
                 decoration: BoxDecoration(
                   color:
                       widget.isAccent ? AppTheme.accent : AppTheme.accentLight,
                   borderRadius: BorderRadius.circular(10),
+                  // boxShadow:
+                  //     widget.isActive
+                  //         ? [
+                  //           BoxShadow(
+                  //             color: AppTheme.accent.withOpacity(0.35),
+                  //             blurRadius: 6,
+                  //             spreadRadius: 1,
+                  //           ),
+                  //         ]
+                  //         : null,
                 ),
               ),
             ],
@@ -281,6 +322,8 @@ class _NavItemState extends State<_NavItem> {
 // ============================================================
 
 class _MobileMenuButton extends StatefulWidget {
+  final String activeSection;
+
   final VoidCallback onAboutTap;
   final VoidCallback onSkillsTap;
   final VoidCallback onProjectsTap;
@@ -288,6 +331,7 @@ class _MobileMenuButton extends StatefulWidget {
   final VoidCallback onContactTap;
 
   const _MobileMenuButton({
+    required this.activeSection,
     required this.onAboutTap,
     required this.onSkillsTap,
     required this.onProjectsTap,
@@ -332,6 +376,7 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                 _MobileMenuItem(
                   number: '01',
                   title: 'About',
+                  isActive: widget.activeSection == 'about',
                   onTap: () {
                     Navigator.pop(context);
                     widget.onAboutTap();
@@ -341,6 +386,7 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                 _MobileMenuItem(
                   number: '02',
                   title: 'Skills',
+                  isActive: widget.activeSection == 'skills',
                   onTap: () {
                     Navigator.pop(context);
                     widget.onSkillsTap();
@@ -350,6 +396,7 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                 _MobileMenuItem(
                   number: '03',
                   title: 'Projects',
+                  isActive: widget.activeSection == 'projects',
                   onTap: () {
                     Navigator.pop(context);
                     widget.onProjectsTap();
@@ -359,6 +406,7 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                 _MobileMenuItem(
                   number: '04',
                   title: 'Experience',
+                  isActive: widget.activeSection == 'experience',
                   onTap: () {
                     Navigator.pop(context);
                     widget.onExperienceTap();
@@ -369,6 +417,7 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                   number: '05',
                   title: 'Contact',
                   isAccent: true,
+                  isActive: widget.activeSection == 'contact',
                   onTap: () {
                     Navigator.pop(context);
                     widget.onContactTap();
@@ -441,12 +490,14 @@ class _MobileMenuItem extends StatefulWidget {
   final String title;
   final VoidCallback onTap;
   final bool isAccent;
+  final bool isActive;
 
   const _MobileMenuItem({
     required this.number,
     required this.title,
     required this.onTap,
     this.isAccent = false,
+    this.isActive = false,
   });
 
   @override
@@ -458,6 +509,8 @@ class _MobileMenuItemState extends State<_MobileMenuItem> {
 
   @override
   Widget build(BuildContext context) {
+    final bool highlighted = widget.isActive || isHovered;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) {
@@ -474,17 +527,26 @@ class _MobileMenuItemState extends State<_MobileMenuItem> {
         onTap: widget.onTap,
         borderRadius: BorderRadius.circular(14),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
           margin: const EdgeInsets.only(bottom: 5),
           padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 16),
           decoration: BoxDecoration(
             color:
-                isHovered
+                highlighted
                     ? (widget.isAccent
-                        ? AppTheme.accent.withOpacity(0.07)
-                        : Colors.white.withOpacity(0.025))
+                        ? AppTheme.accent.withOpacity(
+                          widget.isActive ? 0.10 : 0.07,
+                        )
+                        : Colors.white.withOpacity(
+                          widget.isActive ? 0.045 : 0.025,
+                        ))
                     : Colors.transparent,
             borderRadius: BorderRadius.circular(14),
+            border:
+                widget.isActive
+                    ? Border.all(color: AppTheme.accent.withOpacity(0.12))
+                    : null,
           ),
           child: Row(
             children: [
@@ -494,19 +556,23 @@ class _MobileMenuItemState extends State<_MobileMenuItem> {
                   fontSize: 9,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.5,
-                  color: widget.isAccent ? AppTheme.accent : AppTheme.mutedText,
+                  color:
+                      widget.isAccent || widget.isActive
+                          ? AppTheme.accent
+                          : AppTheme.mutedText,
                 ),
               ),
 
               const SizedBox(width: 18),
 
               AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 220),
                 style: GoogleFonts.inter(
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight:
+                      widget.isActive ? FontWeight.w600 : FontWeight.w500,
                   color:
-                      isHovered
+                      highlighted
                           ? (widget.isAccent
                               ? AppTheme.accentLight
                               : AppTheme.primaryText)
@@ -518,12 +584,12 @@ class _MobileMenuItemState extends State<_MobileMenuItem> {
               const Spacer(),
 
               AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                transform: Matrix4.translationValues(isHovered ? 3 : 0, 0, 0),
+                duration: const Duration(milliseconds: 220),
+                transform: Matrix4.translationValues(highlighted ? 3 : 0, 0, 0),
                 child: Icon(
                   Icons.arrow_outward_rounded,
                   size: 16,
-                  color: isHovered ? AppTheme.accent : AppTheme.mutedText,
+                  color: highlighted ? AppTheme.accent : AppTheme.mutedText,
                 ),
               ),
             ],
