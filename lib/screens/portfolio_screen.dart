@@ -251,6 +251,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 // STICKY NAVBAR DELEGATE
 // ============================================================
 
+// ============================================================
+// STICKY NAVBAR DELEGATE
+// ============================================================
+
 class _StickyNavbarDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
 
@@ -264,11 +268,28 @@ class _StickyNavbarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Material(color: Colors.transparent, child: child);
+      BuildContext context,
+      double shrinkOffset,
+      bool overlapsContent,
+      ) {
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 20,
+          sigmaY: 20,
+        ),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: child,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
