@@ -12,6 +12,7 @@ class Navbar extends StatelessWidget {
   final VoidCallback onProjectsTap;
   final VoidCallback onExperienceTap;
   final VoidCallback onContactTap;
+  final bool isScrolled;
 
   final String activeSection;
 
@@ -24,6 +25,7 @@ class Navbar extends StatelessWidget {
     required this.onExperienceTap,
     required this.onContactTap,
     required this.activeSection,
+    this.isScrolled = false,
   });
 
   @override
@@ -32,33 +34,56 @@ class Navbar extends StatelessWidget {
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 800;
 
-        return Padding(
+        return AnimatedPadding(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOutCubic,
           padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 18 : 60,
-            vertical: 20,
+            horizontal: isScrolled ? 0 : (isMobile ? 18 : 60),
+            vertical: isScrolled ? 0 : 20,
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(
+              isScrolled ? 0 : 20,
+            ),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-              child: Container(
+              filter: ImageFilter.blur(
+                sigmaX: 25,
+                sigmaY: 25,
+              ),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeOutCubic,
                 height: 66,
-                padding: EdgeInsets.symmetric(horizontal: isMobile ? 18 : 24),
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 18 : 24,
+                ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      AppTheme.surface.withOpacity(0.92),
-                      AppTheme.surfaceLight.withOpacity(0.78),
+                      AppTheme.surface.withOpacity(
+                        isScrolled ? 0.96 : 0.92,
+                      ),
+                      AppTheme.surfaceLight.withOpacity(
+                        isScrolled ? 0.88 : 0.78,
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withOpacity(0.12)),
+                  borderRadius: BorderRadius.circular(
+                    isScrolled ? 0 : 20,
+                  ),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(
+                      isScrolled ? 0.08 : 0.12,
+                    ),
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.34),
-                      blurRadius: 35,
+                      color: Colors.black.withOpacity(
+                        isScrolled ? 0.28 : 0.34,
+                      ),
+                      blurRadius: isScrolled ? 25 : 35,
                       offset: const Offset(0, 14),
                     ),
                     BoxShadow(
@@ -416,7 +441,6 @@ class _MobileMenuButtonState extends State<_MobileMenuButton> {
                 _MobileMenuItem(
                   number: '05',
                   title: 'Contact',
-                  isAccent: true,
                   isActive: widget.activeSection == 'contact',
                   onTap: () {
                     Navigator.pop(context);

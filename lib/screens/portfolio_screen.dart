@@ -151,15 +151,18 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: _StickyNavbarDelegate(
-                    child: Navbar(
-                      activeSection: _activeSection,
-                      onLogoTap: scrollToTop,
-                      onAboutTap: () => scrollToSection(_aboutKey),
-                      onSkillsTap: () => scrollToSection(_skillsKey),
-                      onProjectsTap: () => scrollToSection(_projectsKey),
-                      onExperienceTap: () => scrollToSection(_experienceKey),
-                      onContactTap: () => scrollToSection(_contactKey),
-                    ),
+                    builder: (isScrolled) {
+                      return Navbar(
+                        activeSection: _activeSection,
+                        isScrolled: isScrolled,
+                        onLogoTap: scrollToTop,
+                        onAboutTap: () => scrollToSection(_aboutKey),
+                        onSkillsTap: () => scrollToSection(_skillsKey),
+                        onProjectsTap: () => scrollToSection(_projectsKey),
+                        onExperienceTap: () => scrollToSection(_experienceKey),
+                        onContactTap: () => scrollToSection(_contactKey),
+                      );
+                    },
                   ),
                 ),
 
@@ -256,12 +259,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 // ============================================================
 
 class _StickyNavbarDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
+  final Widget Function(bool isScrolled) builder;
 
-  _StickyNavbarDelegate({required this.child});
+  _StickyNavbarDelegate({
+    required this.builder,
+  });
 
   @override
-  double get minExtent => 106;
+  double get minExtent => 66;
 
   @override
   double get maxExtent => 106;
@@ -272,20 +277,19 @@ class _StickyNavbarDelegate extends SliverPersistentHeaderDelegate {
       double shrinkOffset,
       bool overlapsContent,
       ) {
+    final bool isScrolled = shrinkOffset > 5;
+
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: 20,
           sigmaY: 20,
         ),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-          ),
           child: Material(
             color: Colors.transparent,
-            child: child,
+            child: builder(isScrolled),
           ),
         ),
       ),
@@ -293,7 +297,9 @@ class _StickyNavbarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(covariant _StickyNavbarDelegate oldDelegate) {
+  bool shouldRebuild(
+      covariant _StickyNavbarDelegate oldDelegate,
+      ) {
     return true;
   }
 }
