@@ -26,7 +26,7 @@ class _ContactSectionState extends State<ContactSection> {
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 24 : 80,
-            vertical: isMobile ? 90 : 40,
+            vertical: isMobile ? 30 : 40,
           ),
           child: Center(
             child: ConstrainedBox(
@@ -72,7 +72,7 @@ class _ContactSectionState extends State<ContactSection> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 55),
+                  SizedBox(height: isMobile ? 30 : 55),
                   ScrollReveal(
                     delay: const Duration(milliseconds: 280),
                     offset: const Offset(0, 0.06),

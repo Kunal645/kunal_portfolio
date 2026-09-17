@@ -17,7 +17,7 @@ class SkillsSection extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 24 : 80,
-            vertical: isMobile ? 90 : 130,
+            vertical: isMobile ? 30 : 30,
           ),
           child: Center(
             child: ConstrainedBox(
@@ -30,7 +30,7 @@ class SkillsSection extends StatelessWidget {
                   ScrollReveal(
                     child: const _SectionHeader(),
                   ),
-                  const SizedBox(height: 55),
+                  SizedBox(height: isMobile ? 30 : 55),
                   ScrollReveal(
                     delay: const Duration(milliseconds: 100),
                     child: Text(
@@ -63,7 +63,7 @@ class SkillsSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 65),
+                  SizedBox(height: isMobile ? 30 : 65),
                   _SkillsGrid(
                     isMobile: isMobile,
                   ),

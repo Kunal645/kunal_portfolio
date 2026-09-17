@@ -62,7 +62,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isMobile ? 24 : 80,
-            vertical: 50,
+            vertical: isMobile ? 30 : 50,
           ),
           child: FadeTransition(
             opacity: _fadeAnimation,
@@ -77,7 +77,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const _SectionHeader(),
-                      const SizedBox(height: 60),
+                      SizedBox(height: isMobile ? 30 : 30),
                       Text(
                         'Where I have\nmade an impact.',
                         style: GoogleFonts.inter(
@@ -87,7 +87,7 @@ class _ExperienceSectionState extends State<ExperienceSection>
                           letterSpacing: -2.5,
                         ),
                       ),
-                      const SizedBox(height: 70),
+                      SizedBox(height: isMobile ? 30 : 65),
                       const _ExperienceTimeline(
                         isMobile: false,
                       ),
@@ -154,7 +154,7 @@ class _ExperienceTimeline extends StatelessWidget {
         _ExperienceItem(
           company: 'Digiwagon',
           companyUrl: 'https://digiwagon.com/',
-          role: 'Software Engineer',
+          role: 'Senior Software Engineer',
           period: 'FEB 2024 — PRESENT',
           description:
           'Developing cross-platform applications using Flutter '
@@ -187,7 +187,7 @@ class _ExperienceTimeline extends StatelessWidget {
         _ExperienceItem(
           company: 'Prepseed Pvt. Ltd.',
           companyUrl: 'https://prepseed.com/',
-          role: 'Software Developer',
+          role: 'Flutter Developer',
           period: 'JUN 2022 — JUN 2023',
           description:
           'Developed and maintained software applications while '
@@ -203,7 +203,7 @@ class _ExperienceTimeline extends StatelessWidget {
         _ExperienceItem(
           company: 'Techcompose Solution',
           companyUrl: 'https://techcompose.com/',
-          role: 'Software Development Intern',
+          role: 'Flutter Developer Intern',
           period: 'JAN 2022 — MAY 2022',
           description:
           'Started professional software development experience '
@@ -547,7 +547,7 @@ class _CompanyLinkState extends State<_CompanyLink> {
                 : AppTheme.primaryText,
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             children: [
               Text(widget.company),
               const SizedBox(width: 8),

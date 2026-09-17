@@ -73,7 +73,7 @@ class _HeroSectionState extends State<HeroSection>
 
         return SizedBox(
           width: double.infinity,
-          height: isMobile ? 720 : 550,
+          height: isMobile ? 480 : 550,
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
@@ -84,8 +84,8 @@ class _HeroSectionState extends State<HeroSection>
                 position: _slideAnimation,
                 child: Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 1250,
+                    constraints: BoxConstraints(
+                      maxWidth: isMobile ? 400 : 1250,
                     ),
                     child: Row(
                       children: [
