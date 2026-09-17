@@ -60457,7 +60457,7 @@ return new A.wQ("NAVIGATION",A.b([new A.hN("Home",r.c,s),new A.hN("About",r.d,s)
 BX(){var s=null
 return new A.wQ("TECHNOLOGIES",A.b([new A.iW("Flutter / Dart",s),new A.iW("React Native",s),new A.iW("Java",s),new A.iW("Spring Boot",s),new A.iW("REST APIs",s),new A.iW("SQLite / Firebase",s)],t.p),s)},
 Qp(a){var s=this
-if(a)return A.br(A.b([s.BQ(),B.dw,s.BV(),B.dw,new A.p1(s.a.c,null),B.dx,s.BP()],t.p),B.F,B.n,B.q)
+if(a)return A.br(A.b([s.BQ(),B.dw,s.BV(),B.dw,new A.p1(s.a.c,null),B.dx,s.BP()],t.p),B.v,B.n,B.q)
 return A.bt(A.b([A.ce(s.BQ(),1),s.BV(),B.vp,new A.p1(s.a.c,null),B.vp,s.BP()],t.p),B.v,B.n,B.q)},
 BQ(){return A.ad("\xa9 "+A.afl(new A.fx(Date.now(),0,!1))+" Kunal. All rights reserved.",null,null,A.ab().$2$color$fontSize(B.a4,10))},
 BV(){return A.bt(A.b([new A.pM("GitHub","https://github.com/Kunal645",null),B.vo,new A.pM("LinkedIn","https://in.linkedin.com/in/kunal-vagh",null)],t.p),B.v,B.n,B.aa)},

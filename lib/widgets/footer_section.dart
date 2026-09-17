@@ -244,7 +244,7 @@ class _FooterSectionState extends State<FooterSection> {
   Widget _buildBottomBar(bool isMobile) {
     if (isMobile) {
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildCopyright(),
           const SizedBox(height: 20),
